@@ -1,6 +1,6 @@
 # Atelier
 
-Initial ecommerce scaffold using Next.js App Router, TypeScript, Tailwind CSS v4, Better Auth, and Neon PostgreSQL. Uses npm and Node.js 22.18 or later.
+An editorial ecommerce homepage using Next.js App Router, TypeScript, Tailwind CSS v4, Better Auth, and Neon PostgreSQL integration wiring. Uses npm and Node.js 22.18 or later.
 
 ## Local setup
 
@@ -11,7 +11,7 @@ Initial ecommerce scaffold using Next.js App Router, TypeScript, Tailwind CSS v4
 5. Keep `BETTER_AUTH_URL=http://localhost:3000` for local development.
 6. Run `npm run dev`.
 
-The root page is deliberately blank. Development and production builds work without credentials because integration configuration loads only when used. Auth requests require the environment values above.
+The homepage works without credentials and uses four sample products from `src/lib/products.ts`. It includes responsive collections, category filtering, local search, accessible product previews, and saved pieces held in page memory. Reloading clears saved pieces. No purchases are processed. Auth requests require the environment values above.
 
 ## Commands
 
@@ -29,7 +29,7 @@ src/
     api/auth/[...all]/route.ts  Better Auth GET/POST handler (Node.js runtime)
     globals.css               Tailwind CSS entry point
     layout.tsx                Root document and metadata
-    page.tsx                  Empty root route
+    page.tsx                  Homepage with sample catalogue data
   lib/
     auth.ts                   Lazy Better Auth server configuration
     auth-client.ts            Same-origin Better Auth React client
@@ -45,6 +45,14 @@ Neon is accessed through the standard `pg` driver, which Better Auth supports di
 
 No schemas or migrations have been created or run, including Better Auth's required tables. Database-backed auth operations will require those tables in a later phase. No sign-in method, OAuth provider, auth UI, route protection, or complete authentication flow is enabled.
 
-There are no ecommerce features, product models, cart, checkout, payments, designed UI, or deployment configuration.
+The homepage is a visual catalogue preview. There is no database-backed catalogue, cart, checkout, payment flow, or deployment configuration. Images from Unsplash and Pexels are stored locally and optimized with Next Image; see `docs/image-sources.md` for credits and `docs/design-system.md` for the design foundations.
 
 References: [Better Auth PostgreSQL](https://better-auth.com/docs/adapters/postgresql), [Better Auth Next.js integration](https://better-auth.com/docs/integrations/next), and [Neon connection strings](https://neon.com/docs/connect/connect-from-any-app).
+
+
+### Sample catalogue
+
+- `/new-arrivals` provides category, availability and text filters plus price sorting. Filters use URL query parameters and can be shared or restored with browser navigation.
+- `/products/[slug]` provides a dedicated detail page, large imagery with an accessible enlargement dialog, price, category, color and derived stock state. Unknown slugs show a 404.
+- The homepage and catalogue reuse `ProductCard`, the storefront shell and the existing design tokens. Product fixtures remain in `src/lib/products.ts`; stock labels derive from quantity and made-to-order in `src/lib/stock.ts`.
+- Products, prices and availability are samples. No checkout, new database schema or purchase flow is included.
