@@ -1,3 +1,6 @@
+import { Storefront } from "@/components/home/storefront";
+import { getProducts } from "@/lib/products";
+
 export default function Home() {
-  return null;
+  return <Storefront products={getProducts()} />;
 }
