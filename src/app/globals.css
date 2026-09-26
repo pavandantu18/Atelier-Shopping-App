@@ -1,1 +1,72 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/primitives.css";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --border-hairline: 1px;
+    --duration-interaction: 160ms;
+    --ease-interaction: cubic-bezier(0.2, 0, 0, 1);
+    --focus-ring: var(--color-focus);
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-inline-size: 0;
+    min-block-size: 100svh;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  :where(p, li, dd) {
+    overflow-wrap: anywhere;
+  }
+
+  :where(button, input, select, textarea) {
+    font: inherit;
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 4px;
+  }
+
+  :where(button, [type="button"], [type="submit"], summary):not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-on-dark);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-interaction: 0ms;
+    }
+  }
+}
+
+/* Keep compact interface headings in the same family as their controls. */
+.eyebrow { font-family: var(--font-sans); }
